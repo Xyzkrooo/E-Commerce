@@ -95,7 +95,7 @@
 
       <li class="menu-item mb-1">
         <a href="{{url('/admin/product')}}" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-package"></i>
+          <i class="menu-icon tf-icons bx bx-package"></i>
           <div data-i18n="Analytics">Product</div>
         </a>
       </li>

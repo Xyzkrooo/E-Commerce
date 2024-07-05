@@ -36,22 +36,22 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function storeMedia(Request $request)
-    {
-        if ($request->hasFile('file')) {
-            $image = $request->file('file');
-            $name = uniqid() . '_' . trim($image->getClientOriginalName());
-            $image->storeAs('public/products', $name);
+    // public function storeMedia(Request $request)
+    // {
+    //     if ($request->hasFile('file')) {
+    //         $image = $request->file('file');
+    //         $name = uniqid() . '_' . trim($image->getClientOriginalName());
+    //         $image->storeAs('public/products', $name);
 
-            return response()->json([
-                'name' => $name,
-                'original_name' => $image->getClientOriginalName(),
-            ]);
-        }
+    //         return response()->json([
+    //             'name' => $name,
+    //             'original_name' => $image->getClientOriginalName(),
+    //         ]);
+    //     }
 
-        return response()->json(['error' => 'No file uploaded'], 400);
+    //     return response()->json(['error' => 'No file uploaded'], 400);
 
-    }
+    // }
 
     public function store(Request $request)
     {
@@ -97,55 +97,46 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($id);
         $categories = Category::all();
-        $product->load('image');
-        return view('admin.product.edit', compact('categories', 'product'));
-
+        return view('admin.product.edit', compact('product', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
+    // Update the specified product in storage
+    public function update(Request $request, Product $product)
     {
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required',
+            'category_id' => 'required',
             'price' => 'required|numeric',
             'stok' => 'required|numeric',
             'desc' => 'required',
-            'category_id' => 'required',
         ]);
-        $product = Product::findOrFail($id);
-        $product->name = $request->name;
-        $product->slug = Str::slug($request->name);
-        $product->price = $request->price;
-        $product->stok = $request->stok;
-        $product->desc = $request->desc;
-        $product->category_id = $request->category_id;
-        $product->save();
 
-        // Handle image uploads
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image->storeAs('public/products', $image->hashName());
-            Storage::delete('public/products/' . $product->image);
-            $product->image = $image->hashName();
+        $product->update($request->all());
+
+        if ($request->has('images')) {
+            // Remove old images
+            foreach ($product->images as $image) {
+                Storage::disk('public')->delete('products/' . $image->image_product);
+                $image->delete();
+            }
+
+            // Add new images
+            foreach ($request->input('images', []) as $image) {
+                $product->images()->create(['image_product' => $image]);
+            }
         }
 
-        // Upload multiple images
-        foreach ($request->input('images', []) as $file) {
-            $productImage = new Image();
-            $productImage->product_id = $product->id;
-            $productImage->image_product = $file;
-            $productImage->save();
-        }
+        return redirect()->route('product.index')->with('success', 'Product updated successfully');
+    }
 
-        Alert::success('Success', 'Product updated successfully');
-        return redirect()->route('product.index');
-
+    // Store media files for the product
+    public function storeMedia(Request $request)
+    {
+        $path = $request->file('file')->store('products', 'public');
+        return response()->json(['name' => basename($path), 'original_name' => $request->file('file')->getClientOriginalName()]);
     }
 
     /**
