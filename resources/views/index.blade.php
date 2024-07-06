@@ -4,7 +4,7 @@
 <!-- MAIN CONTENT -->
 
 <!-- START SECTION BANNER -->
-<div class="mt-4 staggered-animation-wrap">
+<div class="mt-4 staggered-animation-wrap" style="background-color: rgb(240, 248, 255)">
 	<div class="custom-container">
     	<div class="row">
         	<div class="col-lg-7 offset-lg-3">
@@ -1194,7 +1194,7 @@
                     <div class="col-12">
                         <div class="heading_tab_header">
                             <div class="heading_s2">
-                                <h4>Trending products</h4>
+                                <h4>New arrival</h4>
                             </div>
                             <div class="view_all">
                             	<a href="#" class="text_default"><i class="linearicons-power"></i> <span>View All</span></a>

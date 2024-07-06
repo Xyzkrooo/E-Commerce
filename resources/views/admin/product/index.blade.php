@@ -6,23 +6,25 @@
 
 @section('content')
 <!--breadcrumb-->
-<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-    <div class="breadcrumb-title pe-3">Product</div>
-    <div class="ps-3">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 p-0">
-                <li class="breadcrumb-item active" aria-current="page">Admin</li>
-                <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-package"></i></a>
-                </li>
-            </ol>
-        </nav>
-    </div>
-    <div class="ms-auto">
-        <div class="btn-group">
-            <a href="{{route('product.create')}}" class="btn btn-sm btn-primary">Add Data</a>
+<div class="breadcrumb_section bg_gray page-title-mini">
+    <!-- STRART CONTAINER -->
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <ol class="breadcrumb justify-content-md-start">
+                    <li class="breadcrumb-item"><a href="{{url('/admin')}}">Admin</a></li>
+                    <li class="breadcrumb-item active"><a href="{{url('/admin/product')}}">Product</a></li>
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <div class="breadcrumb justify-content-md-end">
+                    <div class="btn-group">
+                        <a href="{{route('product.create')}}" class="btn btn-sm btn-primary">Add Data</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+    <!-- END CONTAINER-->
 <!--end breadcrumb-->
 
 <h6 class="mb-0 text-uppercase">Product</h6>

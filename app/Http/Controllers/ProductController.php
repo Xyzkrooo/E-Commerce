@@ -90,8 +90,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::findOrFail($id);
-        return view('admin.product.show', compact('product'));
+        $categories = Category::all();
+        $product = Product::with('image')->findOrFail($id);
+        return view('admin.product.show', compact('product','categories'));
     }
 
     /**
@@ -105,32 +106,34 @@ class ProductController extends Controller
 
     // Update the specified product in storage
     public function update(Request $request, Product $product)
-    {
-        $request->validate([
-            'name' => 'required',
-            'category_id' => 'required',
-            'price' => 'required|numeric',
-            'stok' => 'required|numeric',
-            'desc' => 'required',
-        ]);
+{
+    $request->validate([
+        'name' => 'required',
+        'category_id' => 'required',
+        'price' => 'required|numeric',
+        'stok' => 'required|numeric',
+        'desc' => 'required',
+    ]);
 
-        $product->update($request->all());
+    $product->update($request->only(['name', 'category_id', 'price', 'stok', 'desc']));
 
-        if ($request->has('images')) {
-            // Remove old images
-            foreach ($product->images as $image) {
-                Storage::disk('public')->delete('products/' . $image->image_product);
-                $image->delete();
-            }
-
-            // Add new images
-            foreach ($request->input('images', []) as $image) {
-                $product->images()->create(['image_product' => $image]);
-            }
+    if ($request->hasFile('images')) {
+        // Remove old images
+        foreach ($product->images as $image) {
+            Storage::disk('public')->delete('products/' . $image->image_product);
+            $image->delete();
         }
 
-        return redirect()->route('product.index')->with('success', 'Product updated successfully');
+        // Add new images
+        foreach ($request->file('images') as $file) {
+            $path = $file->store('products', 'public');
+            $product->images()->create(['image_product' => $path]);
+        }
     }
+
+    Alert::success('Success', 'Product Updated successfully');
+    return redirect()->route('product.index')->with('success', 'Product updated successfully');
+}
 
     // Store media files for the product
     public function storeMedia(Request $request)

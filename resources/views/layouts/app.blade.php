@@ -18,6 +18,7 @@
 <!-- Latest Bootstrap min CSS -->
 <link rel="stylesheet" href="{{('user/assets/bootstrap/css/bootstrap.min.css')}}">
 <!-- Google Font -->
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet"> 
 <!-- Icon Font CSS -->
