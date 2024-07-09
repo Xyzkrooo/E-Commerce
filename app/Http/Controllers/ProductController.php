@@ -28,31 +28,13 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
-        return view('admin.product.create', compact('category'));
+        $categories = Category::all();
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-
-    // public function storeMedia(Request $request)
-    // {
-    //     if ($request->hasFile('file')) {
-    //         $image = $request->file('file');
-    //         $name = uniqid() . '_' . trim($image->getClientOriginalName());
-    //         $image->storeAs('public/products', $name);
-
-    //         return response()->json([
-    //             'name' => $name,
-    //             'original_name' => $image->getClientOriginalName(),
-    //         ]);
-    //     }
-
-    //     return response()->json(['error' => 'No file uploaded'], 400);
-
-    // }
-
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -61,6 +43,7 @@ class ProductController extends Controller
             'stok' => 'required|numeric',
             'desc' => 'required',
             'category_id' => 'required',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $product = new Product();
@@ -69,7 +52,14 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->stok = $request->stok;
         $product->desc = $request->desc;
+        $product->short_desc = Str::limit($request->desc, 80);
         $product->category_id = $request->category_id;
+
+        if ($request->hasFile('cover_image')) {
+            $coverImagePath = $request->file('cover_image')->store('products', 'public');
+            $product->cover_image = $coverImagePath;
+        }
+
         $product->save();
 
         // Upload multiple images
@@ -82,7 +72,6 @@ class ProductController extends Controller
 
         Alert::success('Success', 'Product added successfully');
         return redirect()->route('product.index');
-
     }
 
     /**
@@ -91,8 +80,8 @@ class ProductController extends Controller
     public function show($id)
     {
         $categories = Category::all();
-        $product = Product::with('image')->findOrFail($id);
-        return view('admin.product.show', compact('product','categories'));
+        $product = Product::findOrFail($id);
+        return view('admin.product.show', compact('product', 'categories'));
     }
 
     /**
@@ -104,38 +93,54 @@ class ProductController extends Controller
         return view('admin.product.edit', compact('product', 'categories'));
     }
 
-    // Update the specified product in storage
+    /**
+     * Update the specified product in storage.
+     */
     public function update(Request $request, Product $product)
-{
-    $request->validate([
-        'name' => 'required',
-        'category_id' => 'required',
-        'price' => 'required|numeric',
-        'stok' => 'required|numeric',
-        'desc' => 'required',
-    ]);
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required',
+            'price' => 'required|numeric',
+            'stok' => 'required|numeric',
+            'desc' => 'required',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    $product->update($request->only(['name', 'category_id', 'price', 'stok', 'desc']));
+        $product->update($request->only(['name', 'category_id', 'price', 'stok', 'desc']));
+        $product->short_desc = Str::limit($request->desc, 80);
 
-    if ($request->hasFile('images')) {
-        // Remove old images
-        foreach ($product->images as $image) {
-            Storage::disk('public')->delete('products/' . $image->image_product);
-            $image->delete();
+        if ($request->hasFile('cover_image')) {
+            if ($product->cover_image) {
+                Storage::disk('public')->delete($product->cover_image);
+            }
+            $coverImagePath = $request->file('cover_image')->store('products', 'public');
+            $product->cover_image = $coverImagePath;
         }
 
-        // Add new images
-        foreach ($request->file('images') as $file) {
-            $path = $file->store('products', 'public');
-            $product->images()->create(['image_product' => $path]);
+        if ($request->hasFile('images')) {
+            // Remove old images
+            foreach ($product->images as $image) {
+                Storage::disk('public')->delete('products/' . $image->image_product);
+                $image->delete();
+            }
+
+            // Add new images
+            foreach ($request->file('images') as $file) {
+                $path = $file->store('products', 'public');
+                $product->images()->create(['image_product' => $path]);
+            }
         }
+
+        $product->save();
+
+        Alert::success('Success', 'Product updated successfully');
+        return redirect()->route('product.index');
     }
 
-    Alert::success('Success', 'Product Updated successfully');
-    return redirect()->route('product.index')->with('success', 'Product updated successfully');
-}
-
-    // Store media files for the product
+    /**
+     * Store media files for the product.
+     */
     public function storeMedia(Request $request)
     {
         $path = $request->file('file')->store('products', 'public');
@@ -147,26 +152,26 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        // Temukan produk berdasarkan id
+        // Find product by id
         $product = Product::findOrFail($id);
 
-        // Hapus gambar utama jika ada
-        if ($product->image) {
-            Storage::delete('public/products/' . $product->image);
+        // Remove cover image if exists
+        if ($product->cover_image) {
+            Storage::disk('public')->delete($product->cover_image);
         }
 
-        // Hapus gambar-gambar terkait
+        // Remove associated images
         $productImages = Image::where('product_id', $product->id)->get();
         foreach ($productImages as $image) {
-            Storage::delete('public/products/' . $image->image_product);
+            Storage::disk('public')->delete('products/' . $image->image_product);
             $image->delete();
         }
 
-        // Hapus produk
+        // Delete product
         $product->delete();
 
         Alert::success('Success', 'Product deleted successfully');
         return redirect()->route('product.index');
     }
-
 }
+

@@ -91,6 +91,16 @@
                     @enderror
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Cover Image</label>
+                    <input type="file" class="form-control @error('cover_image') is-invalid @enderror"
+                        name="cover_image" value="{{ old('cover_image', $product->cover_image) }}" required></input>
+                    @error('cover_image')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="mb-3">
                     <label for="document">Image</label>
                     <div class="dropzone" id="product-dropzone"></div>
                 </div>

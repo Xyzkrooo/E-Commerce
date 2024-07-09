@@ -49,7 +49,7 @@
                     <tr>
                         <td>{{$i++}}</td>
                         <td>{{$data->name}}</td>
-                        <td>{{$data->price}}</td>
+                        <td>${{ number_format($data->price) }}</td>
                         <td>{{$data->stok}}</td>
                         <td>{{$data->category->name}}</td>
                         <td>

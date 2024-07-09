@@ -1,14 +1,17 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\DetailProductController;
 use App\Http\Middleware\role;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 // Route Admin(Backend)
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', role::class]], function () {
@@ -23,5 +26,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', role::class]], funct
 
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
+    
+    Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    
+});
+
 // Route Frontend
-Route::get('/', [FrontController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); 
+
+Route::get('/', [App\Http\Controllers\FrontController::class, 'index'])->name('home');
+
+Route::get('/detail_product/{id}', [App\Http\Controllers\ShopController::class, 'shop_details'])->name('detail_product');
+
+Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
+
+Route::get('shop/kategori/{id}', [ShopController::class, 'kategori']);
+// Route::get('/order-completed', [App\Http\Controllers\DoneController::class, 'index'])->name('done');

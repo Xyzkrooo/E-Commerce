@@ -15,11 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('short_desc');
             $table->text('desc');
-            $table->integer('price');
-            $table->integer('stok');
-            $table->foreignId('category_id');
+            $table->integer('price'); 
+            $table->integer('stok'); 
+            $table->string('cover_image');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

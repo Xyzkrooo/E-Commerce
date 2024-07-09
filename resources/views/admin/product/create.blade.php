@@ -42,7 +42,7 @@
                         <label for="" class="form-label">Category</label>
                         <select name="category_id" id=""
                             class="form-control @error('category_id') is-invalid @enderror">
-                            @foreach ($category as $data)
+                            @foreach ($categories as $data)
                             <option value="{{$data->id}}">{{$data->name}}</option>
                             @endforeach
                         </select>
@@ -84,6 +84,16 @@
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cover Image</label>
+                <input type="file" class="form-control @error('cover_image') is-invalid @enderror"
+                    name="cover_image" value="cover_image" required></input>
+                @error('cover_image')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
             </div>
             <div class="mb-3">

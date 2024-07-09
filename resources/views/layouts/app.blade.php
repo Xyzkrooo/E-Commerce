@@ -12,34 +12,34 @@
 <!-- SITE TITLE -->
 <title>Digital Dimenssion</title>
 <!-- Favicon Icon -->
-<link rel="shortcut icon" type="image/x-icon" href="{{('user/assets/images/favicon.png')}}">
+<link rel="shortcut icon" type="image/x-icon" href="{{asset('user/assets/images/favicon.png')}}">
 <!-- Animation CSS -->
-<link rel="stylesheet" href="{{('user/assets/css/animate.css')}}">	
+<link rel="stylesheet" href="{{asset('user/assets/css/animate.css')}}">	
 <!-- Latest Bootstrap min CSS -->
-<link rel="stylesheet" href="{{('user/assets/bootstrap/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/bootstrap/css/bootstrap.min.css')}}">
 <!-- Google Font -->
-<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet"> 
 <!-- Icon Font CSS -->
-<link rel="stylesheet" href="{{('user/assets/css/all.min.css')}}">
-<link rel="stylesheet" href="{{('user/assets/css/ionicons.min.css')}}">
-<link rel="stylesheet" href="{{('user/assets/css/themify-icons.css')}}">
-<link rel="stylesheet" href="{{('user/assets/css/linearicons.css')}}">
-<link rel="stylesheet" href="{{('user/assets/css/flaticon.css')}}">
-<link rel="stylesheet" href="{{('user/assets/css/simple-line-icons.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/all.min.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/ionicons.min.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/themify-icons.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/linearicons.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/flaticon.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/simple-line-icons.css')}}">
 <!--- owl carousel CSS-->
-<link rel="stylesheet" href="{{('user/assets/owlcarousel/css/owl.carousel.min.css')}}">
-<link rel="stylesheet" href="{{('user/assets/owlcarousel/css/owl.theme.css')}}">
-<link rel="stylesheet" href="{{('user/assets/owlcarousel/css/owl.theme.default.min.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/owlcarousel/css/owl.carousel.min.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/owlcarousel/css/owl.theme.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/owlcarousel/css/owl.theme.default.min.css')}}">
 <!-- Magnific Popup CSS -->
-<link rel="stylesheet" href="{{('user/assets/css/magnific-popup.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/magnific-popup.css')}}">
 <!-- Slick CSS -->
-<link rel="stylesheet" href="{{('user/assets/css/slick.css')}}">
-<link rel="stylesheet" href="{{('user/assets/css/slick-theme.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/slick.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/slick-theme.css')}}">
 <!-- Style CSS -->
-<link rel="stylesheet" href="{{('user/assets/css/style.css')}}">
-<link rel="stylesheet" href="{{('user/assets/css/responsive.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/responsive.css')}}">
 
 </head>
 
@@ -79,33 +79,33 @@
 <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a> 
 
 <!-- Latest jQuery --> 
-<script src="{{('user/assets/js/jquery-3.6.0.min.js')}}"></script> 
+<script src="{{asset('user/assets/js/jquery-3.6.0.min.js')}}"></script> 
 <!-- popper min js -->
-<script src="{{('user/assets/js/popper.min.js')}}"></script>
+<script src="{{asset('user/assets/js/popper.min.js')}}"></script>
 <!-- Latest compiled and minified Bootstrap --> 
-<script src="{{('user/assets/bootstrap/js/bootstrap.min.js')}}"></script> 
+<script src="{{asset('user/assets/bootstrap/js/bootstrap.min.js')}}"></script> 
 <!-- owl-carousel min js  --> 
-<script src="{{('user/assets/owlcarousel/js/owl.carousel.min.js')}}"></script> 
+<script src="{{asset('user/assets/owlcarousel/js/owl.carousel.min.js')}}"></script> 
 <!-- magnific-popup min js  --> 
-<script src="{{('user/assets/js/magnific-popup.min.js')}}"></script> 
+<script src="{{asset('user/assets/js/magnific-popup.min.js')}}"></script> 
 <!-- waypoints min js  --> 
-<script src="{{('user/assets/js/waypoints.min.js')}}"></script> 
+<script src="{{asset('user/assets/js/waypoints.min.js')}}"></script> 
 <!-- parallax js  --> 
-<script src="{{('user/assets/js/parallax.js')}}"></script> 
+<script src="{{asset('user/assets/js/parallax.js')}}"></script> 
 <!-- countdown js  --> 
-<script src="{{('user/assets/js/jquery.countdown.min.js')}}"></script> 
+<script src="{{asset('user/assets/js/jquery.countdown.min.js')}}"></script> 
 <!-- imagesloaded js --> 
-<script src="{{('user/assets/js/imagesloaded.pkgd.min.js')}}"></script>
+<script src="{{asset('user/assets/js/imagesloaded.pkgd.min.js')}}"></script>
 <!-- isotope min js --> 
-<script src="{{('user/assets/js/isotope.min.js')}}"></script>
+<script src="{{asset('user/assets/js/isotope.min.js')}}"></script>
 <!-- jquery.dd.min js -->
-<script src="{{('user/assets/js/jquery.dd.min.js')}}"></script>
+<script src="{{asset('user/assets/js/jquery.dd.min.js')}}"></script>
 <!-- slick js -->
-<script src="{{('user/assets/js/slick.min.js')}}"></script>
+<script src="{{asset('user/assets/js/slick.min.js')}}"></script>
 <!-- elevatezoom js -->
-<script src="{{('user/assets/js/jquery.elevatezoom.js')}}"></script>
+<script src="{{asset('user/assets/js/jquery.elevatezoom.js')}}"></script>
 <!-- scripts js --> 
-<script src="{{('user/assets/js/scripts.js')}}"></script>
+<script src="{{asset('user/assets/js/scripts.js')}}"></script>
 
 </body>
 </html>
