@@ -25,9 +25,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', role::class]], funct
     Route::resource('product', ProductController::class);
     Route::post('product/media', [ProductController::class, 'storeMedia'])->name('product.storeMedia');
 
-});
-
-Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
     
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
@@ -35,8 +32,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    
 });
+
+// Route::middleware(['auth'])->group(function () {
+   
+    
+// });
 
 // Route Frontend
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); 

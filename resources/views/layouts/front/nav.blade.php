@@ -2,7 +2,7 @@
     <div class="middle-header dark_skin">
     	<div class="container">
             <div class="nav_block">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="{{url('/')}}">
                     <img class="logo_light" src="{{asset('user/assets/images/logo_light.png')}}" alt="logo">
                     <img class="logo_dark" src="{{asset('user/assets/images/logo_dark.png')}}" alt="logo">
                 </a>
@@ -16,7 +16,7 @@
                     
                         <li><a href="#" class="nav-link"><i class="linearicons-user"></i></a></li>
                         <li><a href="#" class="nav-link"><i class="linearicons-heart"></i></a></li>
-                        <li><a href="#" class="nav-link"><i class="linearicons-bag2"></i></a></li>
+                        <li><a href="{{url('/cart')}}" class="nav-link"><i class="linearicons-bag2"></i></a></li>
                         <li>
                             <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                     class="linearicons-exit"></i></a>

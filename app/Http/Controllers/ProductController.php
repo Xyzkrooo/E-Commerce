@@ -173,5 +173,8 @@ class ProductController extends Controller
         Alert::success('Success', 'Product deleted successfully');
         return redirect()->route('product.index');
     }
+
+    
+    
 }
 
