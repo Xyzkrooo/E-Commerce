@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DetailProductController;
 use App\Http\Middleware\role;
 use Illuminate\Support\Facades\Route;
@@ -29,9 +30,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', role::class]], funct
 Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
     
-    Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
-Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     
 });
 

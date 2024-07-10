@@ -2,53 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\Product;
+use Auth;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function index()
+    public function add(Request $request, $id)
     {
-        return view('front.cart');
-    }
+        $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
 
-    public function addToCart(Request $request, $id)
-    {
         $product = Product::find($id);
-        if(!$product) {
+    
+        if (!$product) {
             return redirect()->back()->with('error', 'Product not found!');
         }
-
-        $cart = Session::get('cart', []);
-
-        if(isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+    
+        $quantity = $request->input('quantity', 1);
+    
+        $cart = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
+    
+        if ($cart) {
+            $cart->quantity += $quantity;
+            $cart->save();
         } else {
-            $cart[$id] = [
-                "name" => $product->name,
-                "quantity" => 1,
-                "price" => $product->price,
-                "image" => $product->cover_image
-            ];
+            Cart::create([
+                'user_id' => Auth::id(),
+                'product_id' => $id,
+                'quantity' => $quantity,
+            ]);
+        }
+    
+        return redirect()->back()->with('success', 'Product added to cart!');
+    }
+
+    public function index()
+    {
+        $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
+        return view('cart.index', compact('cartItems'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $cart = Cart::where('user_id', Auth::id())->where('id', $id)->first();
+
+        if ($cart) {
+            $cart->quantity = $request->quantity;
+            $cart->save();
+            return redirect()->back()->with('success', 'Cart updated successfully!');
         }
 
-        Session::put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return redirect()->back()->with('error', 'Cart item not found!');
     }
 
-    public function showCart()
+    public function delete($id)
     {
-        $cart = Session::get('cart', []);
-        return view('cart.index', compact('cart'));
-    }
+        $cart = Cart::where('user_id', Auth::id())->where('id', $id)->first();
 
-    public function removeFromCart($id)
-    {
-        $cart = Session::get('cart', []);
-        if(isset($cart[$id])) {
-            unset($cart[$id]);
-            Session::put('cart', $cart);
+        if ($cart) {
+            $cart->delete();
+            return redirect()->back()->with('success', 'Cart item removed successfully!');
         }
 
-        return redirect()->back()->with('success', 'Product removed from cart successfully!');
+        return redirect()->back()->with('error', 'Cart item not found!');
     }
+
+    public function clear()
+    {
+        Cart::where('user_id', Auth::id())->delete();
+        return redirect()->back()->with('success', 'All cart items removed successfully!');
+    }
+
 }
