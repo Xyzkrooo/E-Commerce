@@ -64,37 +64,43 @@
                             
                         
                         <div class="col-md-4 col-6">
-                            <div class="product">
-                                <div class="product_img">
-                                    <a href="{{route('detail_product',$data->id)}}">
-                                        <img src="{{ asset('storage/' . $data->cover_image) }}" alt="product_img1" style="width: 261px; height: 261px;">
-                                    </a>
-                                    <div class="product_action_box">
-                                        <ul class="list_none pr_action_btn">
-                                            <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                            <li><a href="#"><i class="icon-heart"></i></a></li>
-                                        </ul>
+                            <div class="item">
+                                <div class="product">
+                                    <div class="product_img">
+                                        <a href="{{route('detail_product',$data->id)}}">
+                                            <img src="{{ asset('storage/' . $data->cover_image) }}"
+                                                alt="product_img1" style="width: 261px; height: 261px;">
+                                        </a>
+                                        <div class="product_action_box">
+                                            <ul class="list_none pr_action_btn">
+                                                <li class="add-to-cart">
+                                                    <form action="{{ route('cart.add', $data->id) }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="quantity" value="1">
+                                                        <button type="submit" class="btn btn-fill-out btn-addtocart">
+                                                            <i class="icon-basket-loaded"></i>
+                                                        </button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="product_info">
-                                    <h6 class="product_title"><a href="{{route('detail_product',$data->id)}}">{{ $data->name }}</a></h6>
-                                    <div class="product_price">
-                                        <span class="price">${{ number_format($data->price) }}</span>
-                                    </div>
-                                    <div class="pr_desc">
-                                        <p>{{ $data->short_desc }}</p>
-                                    </div>
-                                    <div class="list_product_action_box">
-                                        <ul class="list_none pr_action_btn">
-                                            <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                        </ul>
+                                    <div class="product_info">
+                                        <h6 class="product_title"><a
+                                                href="{{route('detail_product',$data->id)}}">{{ $data->name}}</a></h6>
+                                        <div class="product_price">
+                                            <span class="price">${{ number_format($data->price, 2) }}</span>
+                                        </div>
+                                        <div class="pr_desc">
+                                            <p>{{$data->desc}}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         @endforeach
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-12">
                             <ul class="pagination mt-3 justify-content-center pagination_style1">
                                 <li class="page-item active"><a class="page-link" href="#">1</a></li>
@@ -103,7 +109,7 @@
                                 <li class="page-item"><a class="page-link" href="#"><i class="linearicons-arrow-right"></i></a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-lg-3 order-lg-first mt-4 pt-2 mt-lg-0 pt-lg-0">
                     <div class="sidebar">

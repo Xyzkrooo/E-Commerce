@@ -16,28 +16,26 @@ Auth::routes();
 
 // Route Admin(Backend)
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', role::class]], function () {
-    Route::get('/', function () {
-        return view('admin.index');
-    });
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
     // untuk Route Backend Lainnya
     Route::resource('user', App\Http\Controllers\UsersController::class);
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
     Route::post('product/media', [ProductController::class, 'storeMedia'])->name('product.storeMedia');
 
+   
+});
+
+Route::middleware(['auth'])->group(function () {
+    
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
     
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
-    Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    Route::post('cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::delete('cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 });
-
-// Route::middleware(['auth'])->group(function () {
-   
-    
-// });
 
 // Route Frontend
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); 
@@ -50,3 +48,4 @@ Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name
 
 Route::get('shop/kategori/{id}', [ShopController::class, 'kategori']);
 // Route::get('/order-completed', [App\Http\Controllers\DoneController::class, 'index'])->name('done');
+Route::get('/comingsoon', [App\Http\Controllers\FrontController::class, 'comingsoon'])->name('comingsoon'); 

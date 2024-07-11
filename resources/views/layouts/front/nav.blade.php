@@ -14,8 +14,8 @@
                         <li><a href="{{ url('register') }}" class="nav-link">Register</a></li>
                     @else
                     
-                        <li><a href="#" class="nav-link"><i class="linearicons-user"></i></a></li>
-                        <li><a href="#" class="nav-link"><i class="linearicons-heart"></i></a></li>
+                        <li><a href="{{url('/comingsoon')}}" class="nav-link"><i class="linearicons-user"></i></a></li>
+                        <li><a href="{{url('/comingsoon')}}" class="nav-link"><i class="linearicons-heart"></i></a></li>
                         <li><a href="{{url('/cart')}}" class="nav-link"><i class="linearicons-bag2"></i></a></li>
                         <li>
                             <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i

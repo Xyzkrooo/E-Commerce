@@ -60,7 +60,7 @@
                               </div>
                             </div>
                             <div class="mt-4">
-                              <h4 class="mb-0 fw-light">45.2K</h4>
+                              <h4 class="mb-0 fw-light">{{ $users }}</h4>
                               <p class="mb-0">Acount</p>
                             </div>
                             <div class="d-flex align-items-center justify-content-end gap-1 mt-3">
@@ -86,7 +86,7 @@
                               </div>
                             </div>
                             <div class="mt-4">
-                              <h4 class="mb-0 fw-light">62.4K</h4>
+                              <h4 class="mb-0 fw-light">{{ $product }}</h4>
                               <p class="mb-0">Produk</p>
                             </div>
                             <div class="d-flex align-items-center justify-content-end gap-1 mt-3">
