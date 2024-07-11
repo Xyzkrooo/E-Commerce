@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <ol class="breadcrumb justify-content-md-end">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('/shop')}}">Shop</a></li>
                     <li class="breadcrumb-item active">Shopping Cart</li>
                 </ol>
             </div>
@@ -72,8 +72,6 @@
                                                     <input type="button" value="-" class="minus" onclick="changeQuantity(this, {{ $data->id }}, -1)">
                                                     <input type="text" name="quantity" value="{{ $data->quantity }}" title="Qty" class="qty" size="4" min="1" required>
                                                     <input type="button" value="+" class="plus" onclick="changeQuantity(this, {{ $data->id }}, 1)">
-                                                    <br>
-                                                    <button type="submit" class="btn btn-fill-out btn-sm"><i class="icon-refresh"></i></button>
                                                 </form>
                                             </div>
                                         </td>
@@ -134,7 +132,7 @@
                                 <tr>
                                     <td class="cart_total_label">Shipping</td>
                                     <td class="cart_total_amount">Free Shipping</td>
-                                </tr>
+                                </tr>   
                                 <tr>
                                     <td class="cart_total_label">Total</td>
                                     <td class="cart_total_amount"><strong>${{ number_format($total, 2) }}</strong></td>
@@ -144,7 +142,7 @@
                     </div>
                     <form action="{{ route('checkout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-fill-out">Proceed To CheckOut</button>
+                        <a href="{{ route('checkout') }}" class="btn btn-fill-out">Proceed To CheckOut</a>
                     </form>
                 </div>
             </div>

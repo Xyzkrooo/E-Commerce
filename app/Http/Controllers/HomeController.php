@@ -24,6 +24,7 @@ class HomeController extends Controller
             $users = User::count();
             $product = product::count();
             $category = Category::count();
+            
             // dd($users);
             return view('admin.index', compact('users','product','category'));
         } else {

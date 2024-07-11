@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
@@ -28,7 +29,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', role::class]], funct
 
 Route::middleware(['auth'])->group(function () {
     
-    Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
+    Route::get('/done', function () {return view('front.done');})->name('done');
     
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

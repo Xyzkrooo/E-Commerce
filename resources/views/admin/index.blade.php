@@ -112,7 +112,7 @@
                               </div>
                             </div>
                             <div class="mt-4">
-                              <h4 class="mb-0 fw-light">25.8K</h4>
+                              <h4 class="mb-0 fw-light">{{ $category }}</h4>
                               <p class="mb-0">Kategori</p>
                             </div>
                             <div class="d-flex align-items-center justify-content-end gap-1 mt-3">

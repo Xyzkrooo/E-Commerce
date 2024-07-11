@@ -2,64 +2,87 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\order;
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\Order_Item;
+use App\Models\Transaction;
+use App\Models\CartItem;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function checkout()
     {
-        //
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('login')->with('error_message', 'Please login to proceed.');
+        }
+
+        $cartItems = $user->cartItems()->with('product')->get();
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error_message', 'Your cart is empty.');
+        }
+
+        $subTotal = $cartItems->sum(function ($cartItem) {
+            return $cartItem->quantity * $cartItem->product->price;
+        });
+        $total = $subTotal; // Include shipping or other fees as needed
+
+        return view('front.checkout', compact('cartItems', 'subTotal', 'total'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function placeOrder(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'billing_address' => 'required|string',
+            'order_notes' => 'nullable|string',
+            'payment_option' => 'required|string',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('login')->with('error_message', 'Please login to proceed.');
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(order $order)
-    {
-        //
-    }
+        $cartItems = $user->cartItems()->with('product')->get();
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error_message', 'Your cart is empty.');
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(order $order)
-    {
-        //
-    }
+        DB::transaction(function () use ($request, $cartItems) {
+            $total = $cartItems->sum(function ($cartItem) {
+                return $cartItem->quantity * $cartItem->product->price;
+            });
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, order $order)
-    {
-        //
-    }
+            $order = Order::create([
+                'user_id' => auth()->user()->id,
+                'billing_address' => $request->input('billing_address'),
+                'order_notes' => $request->input('order_notes'),
+                'payment_option' => $request->input('payment_option'),
+                'total' => $total,
+            ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(order $order)
-    {
-        //
+            foreach ($cartItems as $cartItem) {
+                order_item::create([
+                    'order_id' => $order->id,
+                    'product_id' => $cartItem->product_id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $cartItem->product->price,
+                ]);
+            }
+
+            // Create the transaction record
+            transaction::create([
+                'order_id' => $order->id,
+                'transaction_id' => 'TXN' . strtoupper(uniqid()), // Replace with actual transaction ID from payment gateway
+                'amount' => $total,
+                'status' => 'pending', // Change based on actual transaction status
+            ]);
+
+            // Clear the user's cart
+            auth()->user()->cartItems()->delete();
+        });
+
+        return redirect()->route('done')->with('success_message', 'Your order has been placed successfully!');
     }
 }

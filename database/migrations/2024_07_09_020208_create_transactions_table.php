@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->decimal('amount', 8, 2);
-            $table->string('payment_method');
-            $table->string('transaction_status');
+            $table->string('transaction_id');
+            $table->decimal('amount', 10, 2);
+            $table->string('status'); // e.g., 'pending', 'completed', 'failed'
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
