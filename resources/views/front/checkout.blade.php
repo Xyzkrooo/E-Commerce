@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="custome-radio">
                                         <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios4" value="check_payment">
-                                        <label class="form-check-label" for="exampleRadios4">Check Payment</label>
+                                        <label class="form-check-label" for="exampleRadios4">Online Payment</label>
                                     </div>
                                     <div class="custome-radio">
                                         <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios5" value="paypal">

@@ -50,5 +50,7 @@ Route::get('/detail_product/{id}', [App\Http\Controllers\ShopController::class, 
 Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
 
 Route::get('shop/kategori/{id}', [ShopController::class, 'kategori']);
+
 // Route::get('/order-completed', [App\Http\Controllers\DoneController::class, 'index'])->name('done');
+
 Route::get('/comingsoon', [App\Http\Controllers\FrontController::class, 'comingsoon'])->name('comingsoon'); 

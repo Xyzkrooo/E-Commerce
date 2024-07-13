@@ -85,7 +85,7 @@
                                 <div class="cart-product-quantity">
                                     <div class="quantity">
                                         <input type="button" value="-" class="minus">
-                                        <input type="text" name="quantity" value="1" title="Qty" class="qty" size="4">
+                                        <input type="text" name="quantity" value="1" title="Qty" class="qty" size="4" max="{{ $product->stok }}">
                                         <input type="button" value="+" class="plus">
                                     </div>
                                 </div>

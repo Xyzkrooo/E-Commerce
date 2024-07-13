@@ -138,8 +138,8 @@
                               </div>
                             </div>
                             <div class="mt-4">
-                              <h4 class="mb-0 fw-light">58.9K</h4>
-                              <p class="mb-0">Order</p>
+                              <h4 class="mb-0 fw-light">${{number_format($order, 2)}}</h4>
+                              <p class="mb-0">Orders</p>
                             </div>
                             <div class="d-flex align-items-center justify-content-end gap-1 mt-3">
                             </div>

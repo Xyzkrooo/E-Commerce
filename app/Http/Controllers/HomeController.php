@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\product;
 use App\Models\Category;
+use App\Models\order;
 use App\Http\Middleware\role;
 use Auth;
 use Illuminate\Http\Request;
@@ -24,9 +25,10 @@ class HomeController extends Controller
             $users = User::count();
             $product = product::count();
             $category = Category::count();
+            $order = order::sum('total');
             
             // dd($users);
-            return view('admin.index', compact('users','product','category'));
+            return view('admin.index', compact('users','product','category','order'));
         } else {
             return view('home');
         }

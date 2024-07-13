@@ -100,11 +100,11 @@
         </a>
       </li>
 
-      <li class="menu-item mb-1">
+      {{-- <li class="menu-item mb-1">
         <a href="{{url('/admin/transaction')}}" class="menu-link">
           <i class='menu-icon tf-icon bx bx-transfer'></i>
           <div data-i18n="Analytics">transaction</div>
         </a>
-      </li>
+      </li> --}}
     </ul>
   </aside>
