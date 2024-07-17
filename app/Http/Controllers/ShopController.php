@@ -15,6 +15,8 @@ class ShopController extends Controller
         return view('front.shop',compact('product','category'));
     }
 
+
+    
     public function shop_details($id)
     {
         $products = Product::all();

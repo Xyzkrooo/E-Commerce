@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-     public function add(Request $request, $id)
+    public function add(Request $request, $id)
     {
         $request->validate([
             'quantity' => 'required|integer|min:1',
         ]);
 
         $product = Product::find($id);
+        $product->stok -= $request->stok;
+        $product->save();
     
         if (!$product) {
             return redirect()->back()->with('error', 'Product not found!');
@@ -26,7 +28,7 @@ class CartController extends Controller
         $cart = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
     
         if ($cart) {
-            $cart->quantity += $quantity;
+            $cart->quantity = $quantity;
             $cart->save();
         } else {
             Cart::create([
@@ -75,7 +77,7 @@ class CartController extends Controller
     {
         $cart = Cart::where('user_id', Auth::id())->where('id', $id)->first();
 
-        if ($cart) {
+            if ($cart) {
             $cart->delete();
             return redirect()->back()->with('success', 'Cart item removed successfully!');
         }

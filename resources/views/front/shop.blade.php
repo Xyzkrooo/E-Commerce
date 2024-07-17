@@ -89,7 +89,7 @@
                                         <h6 class="product_title"><a
                                                 href="{{route('detail_product',$data->id)}}">{{ $data->name}}</a></h6>
                                         <div class="product_price">
-                                            <span class="price">${{ number_format($data->price, 2) }}</span>
+                                            <span class="price">Rp.{{ number_format($data->price, 2) }}</span>
                                         </div>
                                         <div class="pr_desc">
                                             <p>{{$data->desc}}</p>

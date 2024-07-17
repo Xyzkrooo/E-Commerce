@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <ol class="breadcrumb justify-content-md-end">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('/shop')}}">Shop</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/shop') }}">Shop</a></li>
                     <li class="breadcrumb-item active">Shopping Cart</li>
                 </ol>
             </div>
@@ -33,7 +33,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="product-thumbnail">&nbsp;</th>
+                                <th class="product-thumbnail">Image</th>
                                 <th class="product-name">Product</th>
                                 <th class="product-price">Price</th>
                                 <th class="product-quantity">Quantity</th>
@@ -44,7 +44,7 @@
                         <tbody>
                             @if($cartItems->isEmpty())
                                 <tr>
-                                    <td colspan="7" class="text-center ">
+                                    <td colspan="7" class="text-center">
                                         <div class="text-center" style="margin-top: 20px;">
                                             <i class="ti-shopping-cart" style="font-size: 50px;"></i>
                                             <p>Cart is empty</p>
@@ -63,11 +63,11 @@
                                             <a href="#">{{ $data->product->name }}</a>
                                         </td>
                                         <td class="product-price" data-title="Price">
-                                            ${{ number_format($data->product->price, 2) }}
+                                            Rp.{{ number_format($data->product->price, 2) }}
                                         </td>
                                         <td class="product-quantity" data-title="Quantity">
                                             <div class="quantity">
-                                                <form action="{{ route('cart.update', $data->id) }}" method="POST">
+                                                <form id="quantity-form-{{ $data->id }}" action="{{ route('cart.update', $data->id) }}" method="POST">
                                                     @csrf
                                                     <input type="button" value="-" class="minus" onclick="changeQuantity(this, {{ $data->id }}, -1)">
                                                     <input type="text" name="quantity" value="{{ $data->quantity }}" title="Qty" class="qty" size="4" min="1" required>
@@ -76,7 +76,7 @@
                                             </div>
                                         </td>
                                         <td class="product-subtotal" data-title="Sub Total">
-                                            ${{ number_format($data->sub_total, 2) }}
+                                            Rp.{{ number_format($data->sub_total, 2) }}
                                         </td>
                                         <td class="product-remove" data-title="Remove">
                                             <form action="{{ route('cart.delete', $data->id) }}" method="POST">
@@ -93,8 +93,11 @@
                         <tfoot>
                             <tr>
                                 <td colspan="6" class="px-0">
-                                    <div class="row g-0 align-items-center">           
-                                        <div class="col-lg-8 col-md-4 text-start text-md-start">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-lg-4 col-md-6 mb-3 mb-md-0 text-start text-md-start">
+                                            <button class="btn btn-fill-out btn-sm" type="button" onclick="submitAllForms()">Update Cart</button>
+                                    	</div>           
+                                        <div class="col-lg-8 col-md-4 text-end text-md-end">
                                             <form action="{{ route('cart.clear') }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -127,7 +130,7 @@
                             <tbody>
                                 <tr>
                                     <td class="cart_total_label">Cart Subtotal</td>
-                                    <td class="cart_total_amount">${{ number_format($subTotal, 2) }}</td>
+                                    <td class="cart_total_amount">Rp.{{ number_format($subTotal, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">Shipping</td>
@@ -135,7 +138,7 @@
                                 </tr>   
                                 <tr>
                                     <td class="cart_total_label">Total</td>
-                                    <td class="cart_total_amount"><strong>${{ number_format($total, 2) }}</strong></td>
+                                    <td class="cart_total_amount"><strong>Rp.{{ number_format($total, 2) }}</strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -157,15 +160,21 @@
 </div>
 <script>
     function changeQuantity(button, id, change) {
-        var form = button.closest('form');
+        var form = document.getElementById('quantity-form-');
         var input = form.querySelector('input[name="quantity"]');
         var currentQuantity = parseInt(input.value);
         var newQuantity = currentQuantity + change;
 
         if (newQuantity >= 0) {
             input.value = newQuantity;
-            form.submit();
         }
+    }
+
+    function submitAllForms() {
+        var forms = document.querySelectorAll('form[id^="quantity-form-"]');
+        forms.forEach(function(form) {
+            form.submit();
+        });
     }
 </script>
 @endsection

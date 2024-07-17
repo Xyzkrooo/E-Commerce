@@ -99,8 +99,7 @@
                                 </div>
                             </div>
                             <hr />
-                            <ul class="product-meta">
-                                <li>SKU: <a href="#">BE45VGRT</a></li>
+                            <ul class="product-meta"
                                 <li>Category: <a href="#">{{ $product->category->name }}</a></li>
                             </ul>
                         </div>

@@ -26,6 +26,27 @@
     <link href="{{ asset('maxton/sass/blue-theme.css') }}" rel="stylesheet">
     <link href="{{ asset('maxton/sass/responsive.css') }}" rel="stylesheet">
 
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        .card {
+            width: 100%;
+            max-width: 900px;
+        }
+        .form-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +54,7 @@
 
     <!--authentication-->
 
-    <div class="mx-3 mx-lg-0">
+    <div class="mx-3  mx-lg-0">
 
         <div class="card my-5 col-xl-9 col-xxl-8 mx-auto rounded-4 overflow-hidden p-4">
             <div class="row g-4">
@@ -41,35 +62,8 @@
                     <div class="card-body">
                         <h4 class="fw-bold">Get Started Now</h4>
                         <p class="mb-0">Enter your credentials to login your account</p>
-                        <div class="row gy-2 gx-0 my-4">
-                            <div class="col-12 col-lg-12">
-                                <button
-                                    class="btn btn-filter py-2 px-4 font-text1 fw-bold d-flex align-items-center justify-content-center w-100">
-                                    <span class=""><img src="{{asset('maxton/assets/images/apps/05.png')}}" width="20"
-                                            class="me-2" alt="">Sign in with Google</span>
-                                </button>
-                            </div>
-                            <div class="col-12 col-lg-12">
-                                <button
-                                    class="btn btn-filter py-2 px-4 font-text1 fw-bold d-flex align-items-center justify-content-center w-100">
-                                    <span class=""><img src="{{asset('maxton/assets/images/apps/17.png')}}" width="20"
-                                            class="me-2" alt="">Sign in with Facebook</span>
-                                </button>
-                            </div>
-                            <div class="col-12 col-lg-12">
-                                <button
-                                    class="btn btn-filter py-2 px-4 font-text1 fw-bold d-flex align-items-center justify-content-center w-100">
-                                    <span class=""><img src="{{asset('maxton/assets/images/apps/18.png')}}" width="20"
-                                            class="me-2" alt="">Sign in with LinkedIn</span>
-                                </button>
-                            </div>
-                        </div>
 
-                        <div class="separator">
-                            <div class="line"></div>
-                            <p class="mb-0 fw-bold">OR SIGN IN WITH</p>
-                            <div class="line"></div>
-                        </div>
+    
                         <div class="form-body mt-4">
                             <form class="row g-3" action="{{route('login')}}" method="post">
                                 @csrf

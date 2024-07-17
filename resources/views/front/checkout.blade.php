@@ -41,18 +41,18 @@
                             </div>
                             <div class="form-group mb-0">
                                 <div class="payment_option">
-                                    <div class="custome-radio">
+                                    {{-- <div class="custome-radio">
                                         <input class="form-check-input" required type="radio" name="payment_option" id="exampleRadios3" value="bank_transfer" checked>
                                         <label class="form-check-label" for="exampleRadios3">Direct Bank Transfer</label>
-                                    </div>
+                                    </div> --}}
                                     <div class="custome-radio">
                                         <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios4" value="check_payment">
                                         <label class="form-check-label" for="exampleRadios4">Online Payment</label>
                                     </div>
-                                    <div class="custome-radio">
+                                    {{-- <div class="custome-radio">
                                         <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios5" value="paypal">
                                         <label class="form-check-label" for="exampleRadios5">Paypal</label>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="form-group mb-0">

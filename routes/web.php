@@ -8,8 +8,10 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DetailProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\role;
 use Illuminate\Support\Facades\Route;
+
 
 Auth::routes();
 
@@ -30,9 +32,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', role::class]], funct
 Route::middleware(['auth'])->group(function () {
     
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+
     Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order');
     Route::get('/done', function () {return view('front.done');})->name('done');
     
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
@@ -54,3 +59,4 @@ Route::get('shop/kategori/{id}', [ShopController::class, 'kategori']);
 // Route::get('/order-completed', [App\Http\Controllers\DoneController::class, 'index'])->name('done');
 
 Route::get('/comingsoon', [App\Http\Controllers\FrontController::class, 'comingsoon'])->name('comingsoon'); 
+ 

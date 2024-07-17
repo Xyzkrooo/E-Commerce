@@ -18,4 +18,10 @@ class FrontController extends Controller
         
         return view('comingsoon');
     }
+
+    public function profile()
+    {
+        
+        
+    }
 }
